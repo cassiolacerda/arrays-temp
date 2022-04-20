@@ -1,5 +1,5 @@
 const testCase1 = {
-  coins: [5, 7, 1, 1, 2, 3, 22],
+  coins: ["ddadsad", "5", 7, 1, 1, 2, 3, 22],
 };
 const testCase2 = {
   coins: [1, 1, 1, 1, 1],
@@ -11,9 +11,25 @@ const testCase4 = {
   coins: [],
 };
 
+const getFilteredValue = (value) => {
+  if (typeof value === "number") {
+    return value;
+  } else if (typeof value === "string") {
+    try {
+      const testNumber = parseInt(value, 10);
+      return !Number.isNaN(testNumber);
+    } catch (error) {
+      return false;
+    }
+  }
+  return false;
+};
+
 const getNonConstructibleChange = ({ coins }) => {
   if (Array.isArray(coins) && coins.length) {
     return coins
+      .filter(getFilteredValue)
+      .map(n => parseInt(n, 10))
       .sort((a, b) => a - b)
       .reduce((sum, coin) => (coin > sum + 1 ? sum + 1 : sum + coin));
   }
